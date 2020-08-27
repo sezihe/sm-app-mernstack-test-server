@@ -12,8 +12,6 @@ exports.getPosts = (req, res) => {
 
 exports.createPost = (req, res) => {
     const post = new postsModel(req.body);
-    // console.log(post);
-    // console.log(req.body);
     post.save().then(result => {
         res.status(200).json({
             post: result,

@@ -2,6 +2,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
 const express = require('express');
 
@@ -21,15 +22,18 @@ mongoose.connection.on("error", err => console.log(`DB Connection Error: ${err.m
 
 // bringing in routes
 const postsRoutes = require('./routes/posts');
+const authRoutes = require('./routes/auth');
 
 // using middlewares
 app.use(helmet());
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(expressValidator());
 app.use(morgan('tiny'));
 
 // using routes
 app.use('/', postsRoutes);
+app.use('/auth', authRoutes);
 
 // start server
 const port = process.env.PORT || 3000;
